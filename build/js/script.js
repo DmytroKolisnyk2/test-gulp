@@ -1,0 +1,1 @@
+"use strict";console.log("you can import js file in this way");
