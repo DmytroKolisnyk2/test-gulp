@@ -39,7 +39,7 @@ const { src, dest } = require("gulp"),
   // webp_css = require("gulp-webpcss"),
   uglify = require("gulp-uglify-es").default;
 
-function browserSync(params) {
+const browserSync = (params) => {
   browsersync.init({
     server: {
       baseDir: "./" + resultFolder + "/",
@@ -47,46 +47,48 @@ function browserSync(params) {
     port: 1234,
     notify: false,
   });
-}
-function html() {
+};
+const html = () => {
   return src(path.src.html)
     .pipe(fileinclude())
     .pipe(webp_html())
     .pipe(dest(path.build.html))
     .pipe(browsersync.stream());
-}
-function css() {
-  return src(path.src.css)
-    .pipe(
-      scss({
-        outputStyle: "compressed",
-      })
-    )
-    .pipe(group_media())
-    .pipe(
-      autoprefixer({
-        overrideBrowserslist: ["last 5 versions"],
-        cascade: true,
-      })
-    )
-    .pipe(clean_css())
-    // .pipe(
-    //   webp_css({
-    //     webpClass: ".webp",
-    //     noWebpClass: ".no-webp",
-    //   })
-    // )
-    .pipe(dest(path.build.css))
-    .pipe(browsersync.stream());
-}
-function js() {
+};
+const css = () => {
+  return (
+    src(path.src.css)
+      .pipe(
+        scss({
+          outputStyle: "compressed",
+        })
+      )
+      .pipe(group_media())
+      .pipe(
+        autoprefixer({
+          overrideBrowserslist: ["last 5 versions"],
+          cascade: true,
+        })
+      )
+      .pipe(clean_css())
+      // .pipe(
+      //   webp_css({
+      //     webpClass: ".webp",
+      //     noWebpClass: ".no-webp",
+      //   })
+      // )
+      .pipe(dest(path.build.css))
+      .pipe(browsersync.stream())
+  );
+};
+const js = () => {
   return src(path.src.js)
     .pipe(fileinclude())
     .pipe(uglify())
     .pipe(dest(path.build.js))
     .pipe(browsersync.stream());
-}
-function image() {
+};
+const image = () => {
   return src(path.src.img)
     .pipe(
       webp({
@@ -105,17 +107,17 @@ function image() {
     )
     .pipe(dest(path.build.img))
     .pipe(browsersync.stream());
-}
+};
 
-function watchFiles(params) {
+const watchFiles = (params) => {
   gulp.watch([path.watch.html], html);
   gulp.watch([path.watch.css], css);
   gulp.watch([path.watch.js], js);
   gulp.watch([path.watch.img], image);
-}
-function clean(params) {
+};
+const clean = (params) => {
   return del(path.clean);
-}
+};
 const build = gulp.series(clean, gulp.parallel(js, css, html, image));
 const watch = gulp.parallel(build, watchFiles, browserSync);
 
