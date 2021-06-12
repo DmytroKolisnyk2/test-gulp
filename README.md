@@ -6,6 +6,10 @@ version 1.0.0
 
 npm i
 
+Для користувачів Windows ввести команду:
+
+Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy Unrestricted
+
 При цьому має бути встановлений nodejs, коли завантаження завершиться запускаємо галп командою:
 
 gulp
