@@ -13,7 +13,7 @@ const path = {
     html: sourceFolder + "/*.html",
     css: sourceFolder + "/scss/style.scss",
     js: sourceFolder + "/js/script.js",
-    img: sourceFolder + "/img/**/*.{jpg,png,svg,gif,ico,webp}",
+    img: sourceFolder + "/img/**/*.{jpg,png,svg,gif,ico,webp,jpeg}",
     fonts: sourceFolder + "/fonts/*.ttf",
   },
   watch: {
@@ -68,6 +68,7 @@ const css = () => {
         autoprefixer({
           overrideBrowserslist: ["last 5 versions"],
           cascade: true,
+          grid: true,
         })
       )
       .pipe(clean_css())
